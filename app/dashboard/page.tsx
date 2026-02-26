@@ -25,7 +25,7 @@ export default function CourseManagementPage() {
       <div className="mx-auto space-y-6">
         {/* Page Header */}
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl md:text-3xl  text-gray-900">
             Course Management
           </h1>
           <p className="text-sm text-gray-500 mt-1">

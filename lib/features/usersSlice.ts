@@ -8,17 +8,19 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  id: "1",
-  name: "Madison Greg",
-  email: "madison.reertr@soludesks.com",
-  isAuthenticated: true,
+  id: "",
+  name: "",
+  email: "",
+  isAuthenticated: false,
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<UserState>) => action.payload,
+    setUser: (state, action: PayloadAction<UserState>) => {
+      return { ...action.payload, isAuthenticated: true };
+    },
     clearUser: () => initialState,
   },
 });

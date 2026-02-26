@@ -1,8 +1,27 @@
 "use client";
 import { CheckCircle2, ChevronDown, ChevronUp, FileText } from "lucide-react";
 
+interface QuizItem {
+  id: number;
+  question: string;
+  points: number;
+  options?: { id: string; label: string }[];
+}
+
+interface SubLesson {
+  id: string;
+  title: string;
+  quiz?: QuizItem[];
+}
+
+interface LessonSection {
+  id: string;
+  title: string;
+  subLessons: SubLesson[];
+}
+
 interface LessonSidebarProps {
-  lessons: any[];
+  lessons: LessonSection[];
   activeLessonId: string;
   completedIds: Set<string>;
   openSections: Set<string>;
@@ -24,6 +43,7 @@ export function LessonSidebar({
 }: LessonSidebarProps) {
   return (
     <div className="flex flex-col h-10/12 bg-white overflow-hidden">
+      {/* Sidebar Header: Shows overall progress */}
       <div className="shrink-0 bg-white border-b px-5 py-5">
         <p className="text-[12px] font-semibold text-gray-400">
           Lessons ({completedCount}/{totalLessons})
@@ -33,7 +53,8 @@ export function LessonSidebar({
       <div className="flex-1 overflow-y-auto divide-y divide-gray-50 no-scrollbar">
         {lessons.map((section) => {
           const isOpen = openSections.has(section.id);
-          const isDone = section.subLessons?.every((sub: any) =>
+
+          const isDone = section.subLessons?.every((sub: SubLesson) =>
             completedIds.has(sub.id),
           );
 
@@ -60,7 +81,7 @@ export function LessonSidebar({
 
               {isOpen && (
                 <div className="pb-2">
-                  {section.subLessons?.map((sub: any) => {
+                  {section.subLessons?.map((sub: SubLesson) => {
                     const isActive = activeLessonId === sub.id;
                     const isCompleted = completedIds.has(sub.id);
                     const isQuiz = sub.id === "assessment-quiz" || !!sub.quiz;

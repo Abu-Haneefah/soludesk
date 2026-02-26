@@ -79,7 +79,7 @@ export default function LearningPage({
     setActiveLessonId(id);
     setIsSubmitted(false);
     setCurrentTab("content");
-    setIsSidebarOpen(false);
+    setIsSidebarOpen(false); // Closes sidebar on mobile after selection
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -109,23 +109,24 @@ export default function LearningPage({
   }, [activeLesson]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F9FAFB]">
-      <header className="flex items-center justify-between px-4 md:px-6 h-16 sticky top-0 z-40 shrink-0 bg-[#F9FAFB]">
-        <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
+    <div className="flex flex-col min-h-screen bg-[#F9FAFB] overflow-x-hidden">
+      {/* Header */}
+      <header className="flex items-center justify-between px-4 md:px-6 h-16 sticky top-0  shrink-0 bg-[#F9FAFB]/80 backdrop-blur-md border-b border-gray-100">
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
           <Link
             href={`/dashboard/courses/${course.id}`}
             className="p-2 rounded-full hover:bg-gray-100 transition shrink-0"
           >
             <ArrowLeft className="w-5 h-5 text-gray-500" />
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight truncate">
+          <h1 className="text-sm md:text-xl font-bold text-gray-900 uppercase tracking-tight truncate">
             {course.title}
           </h1>
         </div>
 
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+          className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-lg shrink-0"
         >
           {isSidebarOpen ? (
             <X className="w-6 h-6" />
@@ -136,10 +137,10 @@ export default function LearningPage({
       </header>
 
       <div className="flex flex-col lg:flex-row p-3 md:p-4 gap-4 max-w-7xl mx-auto w-full flex-1">
-        <main className="flex-1 bg-white rounded-2xl border border-gray-200 shadow-sm relative h-fit">
+        <main className="flex-1 w-full bg-white rounded-2xl border border-gray-200 shadow-sm relative h-fit overflow-hidden">
           <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8">
             {!activeLesson.quiz && (
-              <div className="relative w-full h-48 md:h-72 rounded-xl overflow-hidden bg-gray-900 mb-6 md:mb-8 group">
+              <div className="relative w-full h-44 sm:h-64 md:h-80 rounded-xl overflow-hidden bg-gray-900 mb-6 md:mb-8 group">
                 <Image
                   src="/course.png"
                   alt="Banner"
@@ -155,12 +156,12 @@ export default function LearningPage({
               </div>
             )}
 
-            <div className="flex gap-6 md:gap-8 border-b border-gray-100 mb-6 md:mb-8">
+            <div className="flex gap-4 md:gap-8 border-b border-gray-100 mb-6 md:mb-8 overflow-x-auto no-scrollbar">
               {["content", "feedback"].map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setCurrentTab(tab)}
-                  className={`pb-4 text-[10px] md:text-xs font-bold uppercase tracking-wider relative transition-all ${
+                  className={`pb-4 text-[10px] md:text-xs font-bold uppercase tracking-wider whitespace-nowrap relative transition-all ${
                     currentTab === tab
                       ? "text-blue-600"
                       : "text-gray-400 hover:text-gray-600"
@@ -197,7 +198,7 @@ export default function LearningPage({
                     <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
                       {activeLesson.title}
                     </h2>
-                    <div className="text-sm leading-relaxed text-gray-600 whitespace-pre-wrap mb-10">
+                    <div className="text-sm md:text-base leading-relaxed text-gray-600 whitespace-pre-wrap mb-10">
                       {activeLesson.content}
                     </div>
                     <div className="flex justify-end">
@@ -217,38 +218,48 @@ export default function LearningPage({
           </div>
         </main>
 
-        <div
+        {/* Sidebar Navigation */}
+        <aside
           className={`
             fixed inset-0 z-50 lg:z-0 lg:block lg:w-80 h-full lg:h-fit lg:sticky lg:top-20
-            ${isSidebarOpen ? "block" : "hidden"}
+            transition-transform duration-300 ease-in-out
+            ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
           `}
         >
+          {/* Mobile Backdrop - Click to close */}
           <div
-            className="absolute inset-0 bg-black/40 lg:hidden"
+            className={`absolute inset-0 bg-black/40 lg:hidden transition-opacity duration-300 ${
+              isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
             onClick={() => setIsSidebarOpen(false)}
           />
 
-          <div className="relative ml-auto w-72 md:w-80 h-full lg:h-auto bg-white lg:rounded-2xl border-l lg:border border-gray-200 shadow-xl lg:shadow-sm flex flex-col overflow-hidden">
-            <div className="lg:hidden p-4 border-b flex items-center justify-between">
+          <div className="relative w-72 sm:w-80 h-full lg:h-auto bg-white lg:rounded-2xl border-r lg:border border-gray-200 shadow-xl lg:shadow-sm flex flex-col overflow-hidden">
+            <div className="lg:hidden p-4 border-b flex items-center justify-between bg-white">
               <span className="font-bold text-xs uppercase text-gray-500">
                 Curriculum
               </span>
-              <button onClick={() => setIsSidebarOpen(false)}>
-                <X className="w-5 h-5" />
+              <button
+                onClick={() => setIsSidebarOpen(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition"
+              >
+                <X className="w-5 h-5 text-gray-500" />
               </button>
             </div>
-            <LessonSidebar
-              lessons={dummyLessons}
-              activeLessonId={activeLessonId}
-              completedIds={completedIds}
-              openSections={openSections}
-              toggleSection={toggleSection}
-              onSelectLesson={handleSelectLesson}
-              totalLessons={totalLessons}
-              completedCount={completedIds.size}
-            />
+            <div className="flex-1 overflow-y-auto">
+              <LessonSidebar
+                lessons={dummyLessons}
+                activeLessonId={activeLessonId}
+                completedIds={completedIds}
+                openSections={openSections}
+                toggleSection={toggleSection}
+                onSelectLesson={handleSelectLesson}
+                totalLessons={totalLessons}
+                completedCount={completedIds.size}
+              />
+            </div>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   );

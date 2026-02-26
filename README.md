@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🛠️ Built With
 
-## Getting Started
+This section lists the major frameworks and libraries that power SoluDesk.
 
-First, run the development server:
+| Technology        | Description                                                             |
+| :---------------- | :---------------------------------------------------------------------- |
+| **Next.js 15**    | The core framework, providing server-side rendering and the App Router. |
+| **TypeScript**    | Ensures type safety and an excellent developer experience.              |
+| **Redux Toolkit** | Manages global application state and authentication logic.              |
+| **RTK Query**     | Handles all data fetching, caching, and server-state synchronization.   |
+| **Tailwind CSS**  | A utility-first CSS framework for rapid and responsive UI development.  |
+| **Lucide React**  | A consistent and beautiful set of open-source icons.                    |
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Getting Started
+
+Follow these simple steps to get a local copy up and running.
+
+### Prerequisites
+
+- Node.js (version 18.17 or later recommended)
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1.  **Clone the repository**
+
+    ```sh
+    git clone https://github.com/yourusername/soludesk.git
+    cd soludesk
+    ```
+
+2.  **Install NPM packages**
+
+    ```sh
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    # or
+    bun install
+    ```
+
+3.  **Run the development server**
+
+    ```sh
+    npm run dev
+    # or
+    yarn dev
+    # or
+    pnpm dev
+    # or
+    bun dev
+    ```
+
+4.  Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Building for Production
+
+```sh
+npm run build
+npm start
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

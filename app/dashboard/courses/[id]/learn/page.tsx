@@ -1,16 +1,7 @@
 "use client";
 
 import { useState, use, useMemo } from "react";
-import {
-  ArrowLeft,
-  Play,
-  Star,
-  HelpCircle,
-  Trophy,
-  RefreshCcw,
-  Menu,
-  X,
-} from "lucide-react";
+import { ArrowLeft, Play, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -21,13 +12,28 @@ import { LessonSidebar } from "@/components/learning/LessonSideBar";
 import { QuizView } from "@/components/learning/Quiz";
 import { ReviewsView } from "@/components/learning/Reviews";
 
+interface QuizQuestion {
+  id: number;
+  question: string;
+  points: number;
+  options?: { id: string; label: string }[];
+}
+
+interface SubLesson {
+  id: string;
+  title: string;
+  content?: string;
+  quiz?: QuizQuestion[];
+}
+
 export default function LearningPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const resolvedParams = use(params);
-  const course = coursesData.find((c) => c.id === resolvedParams.id);
+  const courseId = resolvedParams.id;
+  const course = coursesData.find((c) => c.id === courseId);
 
   const [activeLessonId, setActiveLessonId] = useState("s1");
   const [currentTab, setCurrentTab] = useState("content");
@@ -43,7 +49,7 @@ export default function LearningPage({
 
   if (!course) notFound();
 
-  const activeLesson = useMemo(() => {
+  const activeLesson = useMemo((): SubLesson => {
     for (const section of dummyLessons) {
       const found = section.subLessons.find((s) => s.id === activeLessonId);
       if (found) return found;
@@ -60,7 +66,11 @@ export default function LearningPage({
   const toggleSection = (id: string) => {
     setOpenSections((prev) => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   };
@@ -70,11 +80,17 @@ export default function LearningPage({
     setIsSubmitted(false);
     setCurrentTab("content");
     setIsSidebarOpen(false);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const handleMarkComplete = () => {
-    setCompletedIds((prev) => new Set(prev).add(activeLessonId));
+    setCompletedIds((prev) => {
+      const next = new Set(prev);
+      next.add(activeLessonId);
+      return next;
+    });
   };
 
   const handleSubmitAssessment = () => {
@@ -94,8 +110,7 @@ export default function LearningPage({
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F9FAFB]">
-      {/* Header */}
-      <header className="flex items-center justify-between px-4 md:px-6 h-16  sticky top-0 z-40 shrink-0">
+      <header className="flex items-center justify-between px-4 md:px-6 h-16 sticky top-0 z-40 shrink-0 bg-[#F9FAFB]">
         <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
           <Link
             href={`/dashboard/courses/${course.id}`}
@@ -103,7 +118,7 @@ export default function LearningPage({
           >
             <ArrowLeft className="w-5 h-5 text-gray-500" />
           </Link>
-          <h1 className="text-sm font-bold text-gray-900 uppercase tracking-tight truncate">
+          <h1 className="text-2xl font-bold text-gray-900 uppercase tracking-tight truncate">
             {course.title}
           </h1>
         </div>
@@ -120,8 +135,7 @@ export default function LearningPage({
         </button>
       </header>
 
-      <div className="flex flex-col lg:flex-row p-3 md:p-4 gap-4 max-w-400 mx-auto w-full flex-1">
-        {/* Main Content Area */}
+      <div className="flex flex-col lg:flex-row p-3 md:p-4 gap-4 max-w-7xl mx-auto w-full flex-1">
         <main className="flex-1 bg-white rounded-2xl border border-gray-200 shadow-sm relative h-fit">
           <div className="max-w-4xl mx-auto px-4 md:px-6 py-6 md:py-8">
             {!activeLesson.quiz && (
@@ -164,7 +178,9 @@ export default function LearningPage({
               {currentTab === "content" ? (
                 activeLesson.quiz ? (
                   <QuizView
-                    lesson={activeLesson}
+                    lesson={
+                      activeLesson as SubLesson & { quiz: QuizQuestion[] }
+                    }
                     isSubmitted={isSubmitted}
                     score={score}
                     maxScore={maxPossibleScore}
@@ -187,7 +203,7 @@ export default function LearningPage({
                     <div className="flex justify-end">
                       <Button
                         onClick={handleMarkComplete}
-                        className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 px-8 h-11 rounded-lg font-bold"
+                        className="w-full md:w-auto cursor-pointer bg-blue-600 hover:bg-blue-700 px-8 h-11 rounded-lg font-bold"
                       >
                         Mark as Complete
                       </Button>
@@ -201,7 +217,6 @@ export default function LearningPage({
           </div>
         </main>
 
-        {/* Sidebar */}
         <div
           className={`
             fixed inset-0 z-50 lg:z-0 lg:block lg:w-80 h-full lg:h-fit lg:sticky lg:top-20

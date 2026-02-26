@@ -74,10 +74,10 @@ export default function CourseDetailPage({
             <Users size={24} />
           </div>
           <div>
-            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-0.5">
+            <p className="text-xs text-gray-500 font-medium  tracking-wider mb-0.5">
               Total Applicants
             </p>
-            <p className="text-2xl font-bold text-gray-900">1,223</p>
+            <p className="text-2xl font-medium text-gray-900">1,223</p>
           </div>
         </div>
 
@@ -86,10 +86,10 @@ export default function CourseDetailPage({
             <GraduationCap size={24} />
           </div>
           <div>
-            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-0.5">
+            <p className="text-xs text-gray-500 font-medium  tracking-wider mb-0.5">
               Active Learners
             </p>
-            <p className="text-2xl font-bold text-gray-900">13</p>
+            <p className="text-2xl font-medium text-gray-900">13</p>
           </div>
         </div>
       </div>

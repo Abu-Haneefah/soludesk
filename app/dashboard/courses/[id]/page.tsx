@@ -21,13 +21,13 @@ export default function CourseDetailPage({
   if (!course) notFound();
 
   return (
-    <div className="max-w-[350 mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
+    <div className="max-w-300 mx-auto space-y-6 px-4 py-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-2 md:gap-4">
           <Link
             href="/dashboard"
-            className="p-2 hover:bg-gray-50 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-gray-600" />
           </Link>
@@ -48,14 +48,14 @@ export default function CourseDetailPage({
           href={`/dashboard/courses/${course.id}/learn`}
           className="w-full sm:w-auto"
         >
-          <Button className="w-full bg-[#0066FF] cursor-pointer hover:bg-blue-700 text-white px-8 rounded-lg h-11 font-semibold shadow-sm transition-all active:scale-95">
+          <Button className="w-full  bg-[#0066FF] cursor-pointer hover:bg-blue-700 text-white px-8 rounded-lg h-11 font-semibold shadow-sm transition-all active:scale-95">
             Start Learning
           </Button>
         </Link>
       </div>
 
       {/* Banner Image  */}
-      <div className="relative w-full h-70 sm:h-72 md:h-80 rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 shadow-sm">
+      <div className="relative w-full h-56 sm:h-72 md:h-80 rounded-3xl overflow-hidden border border-gray-100 bg-gray-50 shadow-sm">
         <Image
           src={course.image}
           alt={course.title}
@@ -74,10 +74,10 @@ export default function CourseDetailPage({
             <Users size={24} />
           </div>
           <div>
-            <p className="text-xs text-gray-500 font-medium  tracking-wider mb-0.5">
+            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-0.5">
               Total Applicants
             </p>
-            <p className="text-2xl font-medium text-gray-900">1,223</p>
+            <p className="text-2xl font-bold text-gray-900">1,223</p>
           </div>
         </div>
 
@@ -86,10 +86,10 @@ export default function CourseDetailPage({
             <GraduationCap size={24} />
           </div>
           <div>
-            <p className="text-xs text-gray-500 font-medium  tracking-wider mb-0.5">
+            <p className="text-xs text-gray-500 font-medium uppercase tracking-wider mb-0.5">
               Active Learners
             </p>
-            <p className="text-2xl font-medium text-gray-900">13</p>
+            <p className="text-2xl font-bold text-gray-900">13</p>
           </div>
         </div>
       </div>

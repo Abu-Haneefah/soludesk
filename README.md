@@ -1,4 +1,4 @@
-##🎓 SoluDesk LMS
+## 🎓 SoluDesk LMS
 
 SoluDesk is a high-performance, responsive Learning Management System (LMS) dashboard. Engineered with a focus on speed, type safety, and a seamless student learning experience, it handles everything from complex curriculum navigation to real-time assessments.
 
@@ -23,43 +23,22 @@ SoluDesk uses a Derived State Pattern for its authentication guards. Unlike trad
 
 By utilizing RTK Query, SoluDesk minimizes redundant API calls. The system automatically fetches and caches course data, providing an "instant" feel when navigating between lessons and modules.
 
-soludesk/
-├── app/                        # Next.js 15 App Router (Routes & Layouts)
-│   ├── (auth)/                 # Route Group for Authentication
-│   │   ├── login/              # Login Page
-│   │   └── register/           # Registration Page
-│   ├── dashboard/              # Protected Dashboard Routes
-│   │   ├── courses/            # Course listing and details
-│   │   │   └── [id]/           # Individual course view
-│   │   │       └── learn/      # Interactive course player
-│   │   ├── profile/            # User profile management
-│   │   └── layout.tsx          # Dashboard Shell (Sidebar + Navbar)
-│   ├── api/                    # Route Handlers (Backend logic)
-│   ├── layout.tsx              # Root Layout (Redux Provider, Fonts)
-│   └── page.tsx                # Landing Page (Marketing)
-├── components/                 # React Components
-│   ├── learning/               # LMS specific (Quiz, Sidebar, VideoPlayer)
-│   ├── shared/                 # Reusable (Navbar, Sidebar, Footer)
-│   └── ui/                     # Shadcn / Atomic components (Button, Input)
-├── lib/                        # Core Logic & Utilities
-│   ├── store/                  # Redux Store Configuration
-│   │   ├── features/           # Redux Slices (userSlice, courseSlice)
-│   │   ├── api/                # RTK Query API Definitions (appSlice)
-│   │   └── store.ts            # Root Store definition
-│   ├── schema/                 # Zod Validation Schemas
-│   └── utils.ts                # Helper functions (cn, formatters)
-├── hooks/                      # Custom React Hooks (useAuth, useLocalStorage)
-├── data/                       # Mock Data & Constants (dummyLessons.ts)
-├── types/                      # Global TypeScript Interfaces
-├── public/                     # Static Assets
-│   ├── icons/                  # Custom SVG Icons
-│   └── images/                 # Banner and Profile images
-├── styles/                     # Global CSS and Tailwind configurations
-├── middleware.ts               # Next.js Middleware (Auth protection)
-├── tailwind.config.ts          # Tailwind Configuration
-└── next.config.ts              # Next.js Configuration
+## 📁 Project Structure
 
+```text
+├── app/                # Next.js 15 App Router (Routes & Layouts)
+│   ├── (auth)/         # Auth group (Login/Register)
+│   └── dashboard/      # Protected LMS Dashboard
+├── components/         # React Components
+│   ├── learning/       # Quiz & Lesson Player logic
+│   ├── shared/         # Sidebar & Navbar
+│   └── ui/             # Shadcn base components
+├── lib/                # Core Logic
+│   ├── store/          # Redux Store & API Slices
+│   └── schema/         # Zod Validation Schemas
+└── data/               # Mock Lessons & Course Data
 
+```
 ## 🚀 Getting Started
 
 Follow these simple steps to get a local copy up and running.
@@ -108,5 +87,17 @@ Follow these simple steps to get a local copy up and running.
 
 ```sh
 npm run build
+
+🤝 Contributing
+
+   1. Fork the Project.
+
+    2. Create your Feature Branch (git checkout -b feature/AmazingFeature).
+
+    3. Commit your Changes (git commit -m 'Add some AmazingFeature').
+
+    4. Push to the Branch (git push origin feature/AmazingFeature).
+
+    5. Open a Pull Request.
 npm start
 ```
